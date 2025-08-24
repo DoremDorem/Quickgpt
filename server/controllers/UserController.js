@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from "bcryptjs";
+import Chat from "../models/Chat.js";
 //generate token
 const generateToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET,{expiresIn:'30d'})
@@ -54,7 +55,7 @@ export const getUser=async(req,res)=>{
 //Api to get pubLished Image
 export const getPublishedImages=async(req,res)=>{
     try {
-        const publishedImageMessage=await CharacterData.aggregate([
+        const publishedImageMessage=await Chat.aggregate([
             {$unwind:"$messages"},
             {
                 $match:{
